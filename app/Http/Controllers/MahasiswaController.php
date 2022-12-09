@@ -36,6 +36,13 @@ class MahasiswaController extends Controller {
         $nim = $request->nim;
         $mahasiswa = Mahasiswa::find($nim);
 
+        if (!$mahasiswa) {
+            return response()->json([
+                'mahasiswa' => $mahasiswa,
+                'matakuliah' => $mahasiswa->matakuliah
+            ]);
+        }
+
         return response()->json([
             'mahasiswa' => $mahasiswa,
             'matakuliah' => $mahasiswa->matakuliah
@@ -64,11 +71,16 @@ class MahasiswaController extends Controller {
     public function deleteMahasiswa($nim)
     {
         $mahasiswa = Mahasiswa::find($nim);
+        if ($mahasiswa === null) {
+            return response()->json([
+                'message' => 'Nim not found'
+            ]);
+        }
         $mahasiswa->delete();
 
         return response()->json([
             'status' => 'Success',
-            'message' => `Mahasiswa $mahasiswa->nama has been deleted`
+            'message' => 'Mahasiswa '. $mahasiswa->nama .' has been deleted'
         ]);
     }
 }

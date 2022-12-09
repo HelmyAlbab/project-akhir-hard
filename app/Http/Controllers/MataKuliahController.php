@@ -21,10 +21,4 @@ class MataKuliahController extends Controller {
             'matakuliah' => $matakuliah
         ],200);
     }
-
-    public function deleteMataKuliah($id)
-    {
-        $matakuliah = MataKuliah::findOrFail($id);
-        $matakuliah->delete();
-    }
 }
